@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Zapewnia responsywność – strona dobrze wygląda też na telefonach -->
 
-  <!-- <link rel="stylesheet" href="style.css" /> -->
+  <link rel="stylesheet" href="style.css" />
   <!-- Importuje zewnętrzny plik CSS (style) -->
 
   <title>Mój Pierwszy Blog</title>
@@ -25,6 +25,19 @@
     
     <p>Witaj na moim blogu! Tutaj dzielę się przemyśleniami, ciekawostkami i różnymi inspiracjami.</p>
     <!-- Krótki opis bloga, zachęta dla czytelnika -->
+
+    <section id="newArticleSection">
+      <h2>Dodaj nowy artykuł</h2>
+      <form id="newArticleForm">
+        <label for="author">Autor:</label>
+        <input type="text" id="author" placeholder="Imię autora" required />
+
+        <label for="content">Treść artykułu:</label>
+        <textarea id="content" placeholder="Treść artykułu" required></textarea>
+
+        <button type="submit">Dodaj artykuł</button>
+      </form>
+    </section>
 
     <article>
       <!-- Pojedynczy wpis blogowy lub zapowiedź -->

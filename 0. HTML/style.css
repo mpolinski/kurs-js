@@ -37,3 +37,50 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Stylowanie sekcji formularza */
+#newArticleSection {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#newArticleForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#newArticleForm label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+#newArticleForm input, #newArticleForm textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#newArticleForm input:focus, #newArticleForm textarea:focus {
+  border-color: #666;
+  outline: none;
+}
+
+/* Przycisk formularza */
+#newArticleForm button {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#newArticleForm button:hover {
+  background-color: #555;
+}
