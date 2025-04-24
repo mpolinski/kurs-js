@@ -32,32 +32,20 @@
         <label for="author">Autor:</label>
         <input type="text" id="author" placeholder="Imię autora" required />
 
+        <label for="title">Tytuł:</label>
+        <input type="text" id="title" placeholder="Tytuł" required />
+
         <label for="content">Treść artykułu:</label>
         <textarea id="content" placeholder="Treść artykułu" required></textarea>
 
         <button type="submit">Dodaj artykuł</button>
+        <br />
+        <button id="clearArticleList" type="button">Reset</button>
       </form>
     </section>
-
-    <article>
-      <!-- Pojedynczy wpis blogowy lub zapowiedź -->
-      <h2>Artykuł 1</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
-      <a href="#">Czytaj więcej</a>
-      <!-- Link prowadzący do pełnej wersji artykułu -->
-    </article>
-
-    <article>
-      <h2>Artykuł 2</h2>
-      <p>Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
-      <a href="#">Czytaj więcej</a>
-    </article>
-
-    <article>
-      <h2>Artykuł 3</h2>
-      <p>Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta.</p>
-      <a href="#">Czytaj więcej</a>
-    </article>
+    <div id="articlesContainer">
+      <!-- Miejsce na dynamicznie dodawane artykuły -->
+    </div>
   </div>
 
   <footer>
