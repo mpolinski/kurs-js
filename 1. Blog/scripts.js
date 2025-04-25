@@ -9,12 +9,14 @@ class Article {
     this.publishedDate = publishedDate
   }
 
-  // fromJSON(jsonObj) {
-  //     this.title = jsonObj.title;
-  //     this.author = jsonObj.author;
-  //     this.content = jsonObj.content;
-  //     this.publishedDate = jsonObj.publishedDate
-  // }
+  fromJSON(jsonObj) {
+    // this.title = jsonObj.title;
+    // this.author = jsonObj.author;
+    // this.content = jsonObj.content;
+    // this.publishedDate = jsonObj.publishedDate
+
+    Object.assign(this, jsonObj)
+  }
 
   isRecent() {
     return true;
@@ -38,15 +40,15 @@ function addArticleToLocalStorage(author, content, title) {
 
 function displayArticles() {
   const articlesContainer = document.getElementById('articlesContainer');
-  
+
   /*
   Pobieranie artykułów z localStorage
   W tym miejscy artykuły są pobrane z localStorage jako "odwodnione" obiekty, nie mają żadnych metod 
   */
   const articles = JSON.parse(localStorage.getItem('articles')) || [];
-  
+
   articlesContainer.innerHTML = '';
-  
+
   articles.forEach(article => {
     const articleElement = document.createElement('article');
     /*
@@ -60,7 +62,7 @@ function displayArticles() {
     rehydearedArticle.title = article.title;
     rehydearedArticle.content = article.content;
     rehydearedArticle.publishedDate = article.publishedDate;
-    // articleObj.fromJSON(article)
+    // rehydearedArticle.fromJSON(article)
     articleElement.innerHTML = `
         <h2>${rehydearedArticle.title}</h2>
         <p>Autor: ${rehydearedArticle.author}</p>
@@ -81,6 +83,7 @@ document.getElementById('newArticleForm').addEventListener('submit', function (e
   const content = document.getElementById('content').value;
   const title = document.getElementById('title').value;
 
+
   // Dodaj artykuł do localStorage
   addArticleToLocalStorage(author, content, title);
 
@@ -97,3 +100,46 @@ document.getElementById('clearArticleList').addEventListener('click', function (
 });
 
 window.onload = displayArticles;
+document.body.addEventListener("click", function getCopords(e) {
+  console.log(e);
+  console.log({ x: e.clientX, y: e.clientY });
+
+  console.log(e.target.type)
+  if(e.target.value) {
+    console.log(e.target.value)
+  }
+})
+
+// document.getElementById("author").addEventListener("click", function getCopords(e) {
+//   console.log({x: e.clientX, y: e.clientY});
+//   console.log(this.value)
+// })
+
+// const forbiddenWords = ["lorem", "ipsum", "dolor"]
+// const textInput = "Lorem Ipsum Dolor Sit Amet";
+// lowerTextInput = textInput.toLowerCase();
+// forbiddenFound = false;
+
+// forbiddenWords.forEach(word => {
+//   lowerWord = word.toLowerCase();
+//   if (lowerTextInput.includes(lowerWord)) {
+//     forbiddenFound = true;
+//   }
+// })
+
+// for (let i =0; i < forbiddenWords.length; ++i) {
+//     lowerWord = forbiddenWords[i].toLowerCase();
+//     if (lowerTextInput.includes(lowerWord)) {
+//       forbiddenFound = true;
+//       break;
+//     }
+// }
+
+// forbiddenFound = forbiddenWords.some(word => {
+//   lowerWord = word.toLowerCase();
+//   if (lowerTextInput.includes(lowerWord)) {
+//     return true;
+//   }
+// })
+
+// console.log(forbiddenFound)
