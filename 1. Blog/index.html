@@ -12,6 +12,9 @@
     <h1>Mój Pierwszy Blog</h1>
   </header>
 
+  <div id="messageBox" style="display: none;"></div>
+  <div id="errorBox" style="display: none;"></div>
+
   <div class="container">
     <p>Witaj na moim blogu! Tutaj dzielę się przemyśleniami, ciekawostkami i różnymi inspiracjami.</p>
     
@@ -19,13 +22,13 @@
       <h2>Dodaj nowy artykuł</h2>
       <form id="newArticleForm">
         <label for="author">Autor:</label>
-        <input type="text" id="author" placeholder="Imię autora" required />
+        <input type="text" id="author" placeholder="Imię autora"/>
 
         <label for="title">Tytuł:</label>
-        <input type="text" id="title" placeholder="Tytuł" required />
+        <input type="text" id="title" placeholder="Tytuł" />
 
         <label for="content">Treść artykułu:</label>
-        <textarea id="content" placeholder="Treść artykułu" required></textarea>
+        <textarea id="content" placeholder="Treść artykułu"></textarea>
 
         <button type="submit">Dodaj artykuł</button>
         <br />

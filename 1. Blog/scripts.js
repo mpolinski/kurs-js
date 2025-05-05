@@ -1,5 +1,7 @@
 const SUMMARY_CHARACTER_THRESHOLD = 100;
 const RECENT_THRESHOLD_IN_MS = 1000 * 60 * 60 * 24 * 7;
+const FORBIDDEN_WORDS = ["lorem", "ipsum", "dolor"];
+const MESSAGE_DISPLAY_TIME = 5000; // Czas wyświetlania wiadomości w milisekundach
 
 class Article {
   constructor(author, title, content, publishedDate = new Date()) {
@@ -10,11 +12,6 @@ class Article {
   }
 
   fromJSON(jsonObj) {
-    // this.title = jsonObj.title;
-    // this.author = jsonObj.author;
-    // this.content = jsonObj.content;
-    // this.publishedDate = jsonObj.publishedDate
-
     Object.assign(this, jsonObj)
   }
 
@@ -55,14 +52,8 @@ function displayArticles() {
     Musimy odtworzyć pełnowartościowe obiekty klasy Article, żeby mieć dostęp do metod klasy. Proces ten nazywamy rehydracją.
     */
     let rehydearedArticle = new Article()
-    /*
-    Przepisujemy wartości wszystkich atrybutów do nowoutworzonego obiektu klasy Article
-    */
-    rehydearedArticle.author = article.author;
-    rehydearedArticle.title = article.title;
-    rehydearedArticle.content = article.content;
-    rehydearedArticle.publishedDate = article.publishedDate;
-    // rehydearedArticle.fromJSON(article)
+    rehydearedArticle.fromJSON(article)
+
     articleElement.innerHTML = `
         <h2>${rehydearedArticle.title}</h2>
         <p>Autor: ${rehydearedArticle.author}</p>
@@ -74,6 +65,69 @@ function displayArticles() {
   });
 }
 
+function showMessage(message) {
+  const messageBox = document.getElementById('messageBox');
+  messageBox.textContent = message;
+  messageBox.style.display = 'block';
+
+  setTimeout(() => {
+    messageBox.style.display = 'none';
+  }, MESSAGE_DISPLAY_TIME);
+}
+
+function showError(message) {
+  const errorBox = document.getElementById('errorBox');
+  errorBox.innerHTML = message;
+  errorBox.style.display = 'block';
+
+  setTimeout(() => {
+    errorBox.style.display = 'none';
+  }, MESSAGE_DISPLAY_TIME);
+}
+
+function validateText(text) {
+  const lowerText = text.toLowerCase(); // Zamień tekst na małe litery  
+  let forbiddenFound = false;
+
+  forbiddenFound = FORBIDDEN_WORDS.some(word => {
+    lowerWord = word.toLowerCase();
+    if (lowerText.includes(lowerWord)) {
+      return true;
+    }
+  })
+
+  return !forbiddenFound;
+
+}
+
+function validateForm(author, content, title) {
+  let errroMessage = "";
+  
+  // Sprawdź, czy wszystkie pola są wypełnione
+  if(!author || !content || !title) {
+    errroMessage += "Wszystkie pola są wymagane!<br>";
+  }
+
+  if (!validateText(author)) {
+    errroMessage += "Imię i nazwisko zawiera zabronione słowa!<br>";
+  }
+
+  if (!validateText(content)) {
+    errroMessage += "Treść artykułu zawiera zabronione słowa!<br>";
+  }
+
+  if (!validateText(title)) {
+    errroMessage += "Tytuł artykułu zawiera zabronione słowa!<br>";
+  }
+
+  if (errroMessage) {
+    showError(errroMessage);
+    return false;
+  }
+
+  return true;
+}
+
 
 document.getElementById('newArticleForm').addEventListener('submit', function (event) {
   event.preventDefault(); // Zapobiegaj domyślnej akcji formularza (przeładowanie strony)
@@ -83,6 +137,10 @@ document.getElementById('newArticleForm').addEventListener('submit', function (e
   const content = document.getElementById('content').value;
   const title = document.getElementById('title').value;
 
+  // Walidacja formularza
+  if(!validateForm(author, content, title)) {
+    return;
+  }
 
   // Dodaj artykuł do localStorage
   addArticleToLocalStorage(author, content, title);
@@ -90,35 +148,23 @@ document.getElementById('newArticleForm').addEventListener('submit', function (e
   // Wyczyść formularz
   document.getElementById('newArticleForm').reset();
 
+  // Wyświetl wiadomość
+  showError('Artykuł został dodany pomyślnie!');
+
   // Ponownie załaduj artykuły
   displayArticles();
 });
 
 document.getElementById('clearArticleList').addEventListener('click', function (event) {
+
+  // Wyświetl wiadomość
+  showMessage('Artykuły usunięto pomyślnie!');
   localStorage.removeItem("articles");
   displayArticles();
 });
 
 window.onload = displayArticles;
-document.body.addEventListener("click", function getCopords(e) {
-  console.log(e);
-  console.log({ x: e.clientX, y: e.clientY });
 
-  console.log(e.target.type)
-  if(e.target.value) {
-    console.log(e.target.value)
-  }
-})
-
-// document.getElementById("author").addEventListener("click", function getCopords(e) {
-//   console.log({x: e.clientX, y: e.clientY});
-//   console.log(this.value)
-// })
-
-// const forbiddenWords = ["lorem", "ipsum", "dolor"]
-// const textInput = "Lorem Ipsum Dolor Sit Amet";
-// lowerTextInput = textInput.toLowerCase();
-// forbiddenFound = false;
 
 // forbiddenWords.forEach(word => {
 //   lowerWord = word.toLowerCase();
