@@ -65,23 +65,23 @@ function displayArticles() {
   });
 }
 
-function showMessage(message) {
-  const messageBox = document.getElementById('messageBox');
-  messageBox.textContent = message;
+function showMessage(message, type = "info") {
+   
+  let messageBoxId = "";
+  
+  if(type === "error") {
+    messageBoxId = "errorBox";
+  }
+
+  if(type === "info") {
+    messageBoxId = "messageBox";
+  }
+  const messageBox = document.getElementById(messageBoxId);
+  messageBox.innerHTML = message;
   messageBox.style.display = 'block';
 
   setTimeout(() => {
     messageBox.style.display = 'none';
-  }, MESSAGE_DISPLAY_TIME);
-}
-
-function showError(message) {
-  const errorBox = document.getElementById('errorBox');
-  errorBox.innerHTML = message;
-  errorBox.style.display = 'block';
-
-  setTimeout(() => {
-    errorBox.style.display = 'none';
   }, MESSAGE_DISPLAY_TIME);
 }
 
@@ -121,7 +121,7 @@ function validateForm(author, content, title) {
   }
 
   if (errroMessage) {
-    showError(errroMessage);
+    showMessage(errroMessage, "error");
     return false;
   }
 
