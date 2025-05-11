@@ -2,6 +2,7 @@ const SUMMARY_CHARACTER_THRESHOLD = 100;
 const RECENT_THRESHOLD_IN_MS = 1000 * 60 * 60 * 24 * 7;
 const FORBIDDEN_WORDS = ["lorem", "ipsum", "dolor"];
 const MESSAGE_DISPLAY_TIME = 5000; // Czas wyświetlania wiadomości w milisekundach
+const API_BASE_URL = "http://localhost:3000/api"; // Define the base URL as a constant
 
 class Article {
   constructor(author, title, content, publishedDate = new Date()) {
@@ -35,8 +36,19 @@ function addArticleToLocalStorage(author, content, title) {
   localStorage.setItem('articles', JSON.stringify(articles)); // Zapisz artykuły do localStorage
 }
 
+async function getArticles() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/articles`);
+    const jsonResponse = await response.json();
+    console.log(jsonResponse);
+  } catch(err) {
+    console.log(err);
+  }
+}
+
 function displayArticles() {
   const articlesContainer = document.getElementById('articlesContainer');
+  getArticles();
 
   /*
   Pobieranie artykułów z localStorage
@@ -97,7 +109,6 @@ function validateText(text) {
   })
 
   return !forbiddenFound;
-
 }
 
 function validateForm(author, content, title) {
@@ -109,7 +120,7 @@ function validateForm(author, content, title) {
   }
 
   if (!validateText(author)) {
-    errroMessage += "Imię i nazwisko zawiera zabronione słowa!<br>";
+    errroMessage += "Pole Autor zawiera zabronione słowa!<br>";
   }
 
   if (!validateText(content)) {
@@ -149,7 +160,7 @@ document.getElementById('newArticleForm').addEventListener('submit', function (e
   document.getElementById('newArticleForm').reset();
 
   // Wyświetl wiadomość
-  showError('Artykuł został dodany pomyślnie!');
+  showMessage('Artykuł został dodany pomyślnie!', type="info");
 
   // Ponownie załaduj artykuły
   displayArticles();
@@ -164,28 +175,3 @@ document.getElementById('clearArticleList').addEventListener('click', function (
 });
 
 window.onload = displayArticles;
-
-
-// forbiddenWords.forEach(word => {
-//   lowerWord = word.toLowerCase();
-//   if (lowerTextInput.includes(lowerWord)) {
-//     forbiddenFound = true;
-//   }
-// })
-
-// for (let i =0; i < forbiddenWords.length; ++i) {
-//     lowerWord = forbiddenWords[i].toLowerCase();
-//     if (lowerTextInput.includes(lowerWord)) {
-//       forbiddenFound = true;
-//       break;
-//     }
-// }
-
-// forbiddenFound = forbiddenWords.some(word => {
-//   lowerWord = word.toLowerCase();
-//   if (lowerTextInput.includes(lowerWord)) {
-//     return true;
-//   }
-// })
-
-// console.log(forbiddenFound)
