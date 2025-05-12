@@ -40,15 +40,17 @@ async function getArticles() {
   try {
     const response = await fetch(`${API_BASE_URL}/articles`);
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
+    return jsonResponse;
   } catch(err) {
     console.log(err);
   }
 }
 
-function displayArticles() {
+async function displayArticles() {
   const articlesContainer = document.getElementById('articlesContainer');
-  getArticles();
+  let backendArticles = await getArticles();
+  localStorage.clear();
+  localStorage.setItem('articles', JSON.stringify(backendArticles));
 
   /*
   Pobieranie artykułów z localStorage

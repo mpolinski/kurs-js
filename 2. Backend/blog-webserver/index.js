@@ -2,14 +2,30 @@ const express = require('express');
 const cors = require('cors');
 const Article = require('./article');
 
+// const { Low } =  require('lowdb')
+// const { JSONFile } = require('lowdb/node')
+
+// // Step 1: Setup
+// const adapter = new JSONFile('db.json')
+// const db = new Low(adapter)
+
 const app = express();
 app.use(cors());
 
 const ARTICLES = [
   new Article("Adam Mickiewicz", "Dziady", "Ciemno wszędzie"),
-  new Article("Juliusz Słowacki", "Balladyna", "Nigdy nei lubiłam Aliny"),
+  new Article("Juliusz Słowacki", "Balladyna", "Nigdy nie lubiłam Aliny"),
   new Article("Aleksander Fredro", "Zemsta", "Mocium panie")
 ]
+
+
+// async function getArticles() {
+//   await db.read()
+//   if (!db.data) {
+//     db.data = { articles: [] };
+//   }
+//   return db.data.articles;
+// }
 
 app.get('/', (req, res) => {
   res.send('Hello from Express!');
