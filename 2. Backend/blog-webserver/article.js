@@ -1,5 +1,6 @@
-class Article {
+export class Article {
     constructor(author, title, content, publishedDate = new Date()) {
+      this.is = null;
       this.author = author;
       this.title = title;
       this.content = content;
@@ -23,4 +24,4 @@ class Article {
     }
   }
 
-  module.exports = Article
+  
